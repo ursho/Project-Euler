@@ -4,7 +4,3 @@ def sum(divisor1, divisor2, limit):
         if x % divisor1 == 0 or x % divisor2 == 0:
             s = s + x
     return s
-
-
-class Problem0001(object):
-    pass
