@@ -1,16 +1,22 @@
 import unittest
-import problems.Problem0002
+from problems.Problem0002 import FibonacciGenerator
+from problems.Problem0002 import sum_of_evens_up_to
 
 
 class TestProblem0002(unittest.TestCase):
     def test_nextFibonacci(self):
-        problem = problems.Problem0002.Problem0002()
-        self.assertEqual(fibonacci(1), problem.next_fibonacci())
-        self.assertEqual(fibonacci(2), problem.next_fibonacci())
-        self.assertEqual(fibonacci(3), problem.next_fibonacci())
-        self.assertEqual(fibonacci(4), problem.next_fibonacci())
-        self.assertEqual(fibonacci(5), problem.next_fibonacci())
-        self.assertEqual(fibonacci(6), problem.next_fibonacci())
+        fg = FibonacciGenerator()
+        self.assertEqual(fibonacci(1), fg.next())
+        self.assertEqual(fibonacci(2), fg.next())
+        self.assertEqual(fibonacci(3), fg.next())
+        self.assertEqual(fibonacci(4), fg.next())
+        self.assertEqual(fibonacci(5), fg.next())
+        self.assertEqual(fibonacci(6), fg.next())
+
+    def test_fibonacciOverflow(self):
+        with self.assertRaises(OverflowError):
+            list(FibonacciGenerator())
+
 
     def test_Fibonacci(self):
         self.assertEqual(0, fibonacci(1))
@@ -21,31 +27,31 @@ class TestProblem0002(unittest.TestCase):
         self.assertEqual(5, fibonacci(6))
 
     def test_sumOfEvensUpTo0(self):
-        self.assertEqual(0, problems.Problem0002.sum_of_evens_up_to(0))
+        self.assertEqual(0, sum_of_evens_up_to(0))
 
     def test_sumOfEvensUpTo1(self):
-        self.assertEqual(0, problems.Problem0002.sum_of_evens_up_to(1))
+        self.assertEqual(0, sum_of_evens_up_to(1))
 
     def test_sumOfEvensUpTo2(self):
-        self.assertEqual(2, problems.Problem0002.sum_of_evens_up_to(2))
+        self.assertEqual(2, sum_of_evens_up_to(2))
 
     def test_sumOfEvensUpTo8(self):
-        self.assertEqual(10, problems.Problem0002.sum_of_evens_up_to(8))
+        self.assertEqual(10, sum_of_evens_up_to(8))
 
     def test_sumOfEvensUpTo33(self):
-        self.assertEqual(10, problems.Problem0002.sum_of_evens_up_to(33))
+        self.assertEqual(10, sum_of_evens_up_to(33))
 
     def test_sumOfEvensUpTo34(self):
-        self.assertEqual(44, problems.Problem0002.sum_of_evens_up_to(34))
+        self.assertEqual(44, sum_of_evens_up_to(34))
 
     def test_sumOfEvensUpTo143(self):
-        self.assertEqual(44, problems.Problem0002.sum_of_evens_up_to(143))
+        self.assertEqual(44, sum_of_evens_up_to(143))
 
     def test_sumOfEvensUpTo144(self):
-        self.assertEqual(188, problems.Problem0002.sum_of_evens_up_to(144))
+        self.assertEqual(188, sum_of_evens_up_to(144))
 
     def test_sumOfEvensUpTo4Million(self):
-        self.assertEqual(4613732, problems.Problem0002.sum_of_evens_up_to(4 * 1000 * 1000))
+        self.assertEqual(4613732, sum_of_evens_up_to(4 * 1000 * 1000))
 
 
 def fibonacci(n):

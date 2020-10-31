@@ -1,26 +1,45 @@
-class Problem0002(object):
-    previous = -2
-    current = -1
+class FibonacciGenerator(object):
+    """ FibonacciGenerator implements either an iterator for fibonacci numbers up to a given limit or a generator of fibonacci numbers
 
-    def next_fibonacci(self):
+        usage as iterator:
+        list(FibonacciGenerator(33)) == [0, 1, 1, 2, 3, 5, 8, 13, 21]
+        list(FibonacciGenerator(34)) == [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+        list(FibonacciGenerator(35)) == [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+
+        usage as generator:
+        fg = FibonacciGenerator()
+        fg.next() as many times as you want
+
+        but list(FibonacciGenerator()) raises an OverflowError
+
+    """
+    def __init__(self, limit=-1):
+        self.previous = -2
+        self.current = -1
+        self.limit = limit
+
+    def __iter__(self):
+        if self.limit < 0:
+            raise OverflowError
+        return self
+
+    def __next__(self):
         if self.previous < 0:
             self.previous += 1
             self.current += 1
         else:
             result = self.previous + self.current
+            if -1 < self.limit < result:
+                raise StopIteration
             self.previous = self.current
             self.current = result
 
         return self.current
 
+    def next(self):
+        return self.__next__()
 
 def sum_of_evens_up_to(inclusive_limit):
-    result = 0
-    problem = Problem0002()
-    f = problem.next_fibonacci()
-    while f <= inclusive_limit:
-        if (f % 2) == 0:
-            result = result + f
-        print(f, result)
-        f = problem.next_fibonacci()
-    return result
+    fibonacci_numbers = list(FibonacciGenerator(inclusive_limit))
+    even_fibonacci_numbers = filter(lambda f: f % 2 == 0, fibonacci_numbers)
+    return sum(even_fibonacci_numbers)
