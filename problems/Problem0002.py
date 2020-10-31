@@ -1,14 +1,11 @@
 class Problem0002(object):
     previous = -2
-    current = 0
+    current = -1
 
     def next_fibonacci(self):
-        if self.previous == -2:
+        if self.previous < 0:
             self.previous += 1
-            self.current = 0
-        elif self.previous == -1:
-            self.previous += 1
-            self.current = 1
+            self.current += 1
         else:
             result = self.previous + self.current
             self.previous = self.current
