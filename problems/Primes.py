@@ -59,3 +59,32 @@ def least_common_multiple_of(*numbers):
         result *= pow(factor, total_factors_count[factor])
 
     return result
+
+
+def nth_prime(number):
+    primes = [2, 3]
+
+    def is_prime(n):
+        for p in primes:
+            if n % p == 0:
+                return False
+        return True
+
+    # All primes greater than 3 can be written in the form 6k+/-1
+    def candidate_generator():
+        n = 6
+        while True:
+            yield n - 1
+            yield n + 1
+            n += 6
+
+    generator = candidate_generator()
+    while len(primes) < number:
+        candidate = next(generator)
+        if is_prime(candidate):
+            primes += [candidate]
+
+    if number == 1:
+        return primes[0]
+
+    return primes[-1]
