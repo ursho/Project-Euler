@@ -12,17 +12,50 @@ def prime_factors_of(number):
     remaining_number = number
     while remaining_number > 1:
 
-        lowest_possible_factor = 2
+        factor = 2
         factor_candidate = remaining_number
 
-        while lowest_possible_factor <= limit:
-            if remaining_number % lowest_possible_factor == 0:
-                factor_candidate = lowest_possible_factor
+        while factor <= limit:
+            if remaining_number % factor == 0:
+                factor_candidate = factor
                 break
             else:
-                lowest_possible_factor = lowest_possible_factor + 1
+                factor = factor + 1
 
         factors = factors + [factor_candidate]
         remaining_number = remaining_number // factor_candidate
 
     return factors
+
+
+def least_common_multiple_of_numbers_up_to(limit):
+    numbers = list(range(2, limit + 1))
+    for j in range(len(numbers) - 1):
+        for i in range(j + 1, len(numbers)):
+            if numbers[i] % numbers[j] == 0:
+                numbers[i] //= numbers[j]
+    result = 1
+    for f in numbers:
+        result *= f
+
+    return result
+
+
+def least_common_multiple_of(*numbers):
+    class Counter(dict):
+        def __missing__(self, key):
+            return 0
+
+    total_factors_count = Counter()
+    for n in numbers:
+        factors_count = Counter()
+        for factor in prime_factors_of(n):
+            factors_count[factor] += 1
+        for factor in iter(factors_count):
+            total_factors_count[factor] = max(total_factors_count[factor], factors_count[factor])
+
+    result = 1
+    for factor in iter(total_factors_count):
+        result *= pow(factor, total_factors_count[factor])
+
+    return result
